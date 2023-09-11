@@ -45,7 +45,7 @@ services:
   
   oj-backend:
     build:
-      context: ../OnlineJudge/
+      context: ../OnlineJudgeBE/
     container_name: oj-backend
     restart: always
     depends_on:
