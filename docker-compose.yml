@@ -20,7 +20,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   judge-server:
-    image: zklcdc/judgeserver
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
     container_name: judge-server
     restart: always
     read_only: true
