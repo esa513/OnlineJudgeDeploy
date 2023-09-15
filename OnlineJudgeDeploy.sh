@@ -36,6 +36,7 @@ git remote rm b
 docker cp be.patch oj-backend:/tmp/
 docker exec oj-backend patch -p1 -i /tmp/be.patch
 docker exec oj-backend rm /tmp/be.patch
+rm be.patch
 
 cd ~/OnlineJudge/OnlineJudgeDeploy
 docker compose --profile origin stop
