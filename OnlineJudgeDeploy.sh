@@ -28,15 +28,16 @@ sed -i "s|TOKEN=.*|TOKEN=$token|" docker-compose.yml
 docker compose --profile origin pull
 docker compose --profile origin up -d
 
-cd ~/OnlineJudge/OnlineJudgeBE
-git remote add -f b https://github.com/QingdaoU/OnlineJudge.git
-git remote update
-git diff remotes/b/master master > be.patch
-git remote rm b
-docker cp be.patch oj-backend:/tmp/
-docker exec oj-backend patch -p1 -i /tmp/be.patch
-docker exec oj-backend rm /tmp/be.patch
-rm be.patch
+# 無法從原始碼 build 的話，需透過以下方式更新（可能需要修改）
+# cd ~/OnlineJudge/OnlineJudgeBE
+# git remote add -f b https://github.com/QingdaoU/OnlineJudge.git
+# git remote update
+# git diff remotes/b/master master > be.patch
+# git remote rm b
+# docker cp be.patch oj-backend:/tmp/
+# docker exec oj-backend patch -p1 -i /tmp/be.patch
+# docker exec oj-backend rm /tmp/be.patch
+# rm be.patch
 
 cd ~/OnlineJudge/OnlineJudgeDeploy
 docker compose --profile origin stop
