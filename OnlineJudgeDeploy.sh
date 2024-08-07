@@ -25,8 +25,8 @@ fi
 
 cd ~/OnlineJudge/OnlineJudgeDeploy
 sed -i "s|TOKEN=.*|TOKEN=$token|" docker-compose.yml
-docker compose --profile origin pull
-docker compose --profile origin up -d
+docker compose --profile esa pull
+docker compose --profile esa up -d
 
 # 無法從原始碼 build 的話，需透過以下方式更新（可能需要修改）
 # cd ~/OnlineJudge/OnlineJudgeBE
@@ -39,6 +39,6 @@ docker compose --profile origin up -d
 # docker exec oj-backend rm /tmp/be.patch
 # rm be.patch
 
-cd ~/OnlineJudge/OnlineJudgeDeploy
-docker compose --profile origin stop
-docker compose --profile origin start
+# cd ~/OnlineJudge/OnlineJudgeDeploy
+# docker compose --profile origin stop
+# docker compose --profile origin start
