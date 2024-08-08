@@ -12,7 +12,7 @@ services:
   
   oj-postgres:
     image: postgres:10-alpine
-    container_name: oj-redis
+    container_name: oj-postgres
     restart: always
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
@@ -26,7 +26,7 @@ services:
 
   oj-judge:
     image: registry.cn-hongkong.aliyuncs.com/oj-image/judge:1.6.1
-    container_name: oj-redis
+    container_name: oj-postgres
     restart: always
     read_only: true
     cap_drop:
