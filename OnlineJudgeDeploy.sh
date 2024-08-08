@@ -3,7 +3,7 @@
 help() {
     echo "This script should not be run as the root user."
     echo "Please execute it as a non-root user using the following command and replace <TOKEN>:"
-    echo "cat OnlineJudgeDeploy.sh | sh -s -- -t <TOKEN> && cd ~"
+    echo "cat OnlineJudgeDeploy.sh | sh -s -- -t <TOKEN>"
     exit
 }
 
