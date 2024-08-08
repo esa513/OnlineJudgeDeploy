@@ -8,3 +8,6 @@ docker compose exec -it oj-postgres psql -U onlinejudge -f /tmp/db_backup.sql
 
 # 還原資料
 sudo unzip -o /tmp/data_backup.zip -d /
+
+# 還原後重啟容器
+docker compose --profile esa restart
