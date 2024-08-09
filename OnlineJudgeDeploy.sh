@@ -26,7 +26,7 @@ fi
 cd ~/OnlineJudge/OnlineJudgeDeploy
 sed -i "s|TOKEN=.*|TOKEN=$token|" docker-compose.yml
 docker compose --profile esa pull
-docker compose --profile esa up -d
+docker compose --profile esa up -d --build
 
 # 無法從原始碼 build 的話，需透過以下方式更新（可能需要修改）
 # cd ~/OnlineJudge/OnlineJudgeBE
