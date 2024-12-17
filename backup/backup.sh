@@ -5,21 +5,22 @@ timestamp=$(date +%Y_%m_%d"_"%H_%M_%S)
 
 # 設定路徑
 deploy_path=/home/esa/OnlineJudge/OnlineJudgeDeploy
-deploy_backup_path=$deploy_path/backup
+deploy_backup_path=$deploy_path/backup/files
+oj_db_backup_file_name=oj_db_backup_$timestamp.sql
+oj_backup_file_name=oj_backup_$timestamp.tar.gz
 
 # 建立資料夾
-mkdir -p $deploy_backup_path/{db,data}
+mkdir -p $deploy_backup_path
 
 # 執行 pg_dump 將資料庫保存到 .sql 中
-docker compose exec -it oj-postgres pg_dump -c -U onlinejudge > $deploy_backup_path/db/db_backup_$timestamp.sql
+docker compose exec -T oj-postgres pg_dump -c -U onlinejudge > $deploy_backup_path/$oj_db_backup_file_name
 
-# 將需要的東西保存到 .zip 中
-sudo zip -r $deploy_backup_path/data/data_backup_$timestamp.zip $deploy_path/data/backend/{public,test_case}
+# 使用 tar 將資料庫和數據壓縮到 .tar.gz 中
+sudo tar --transform 's/oj_db_backup_.*.sql/oj_db_backup.sql/' -czvf $deploy_backup_path/$oj_backup_file_name -C $deploy_backup_path $oj_db_backup_file_name -C $deploy_path data/backend/public data/backend/test_case
 
-# 將備份文件複製到 backup 目錄
-cp $deploy_backup_path/db/db_backup_$timestamp.sql $deploy_backup_path/db_backup.sql
-cp $deploy_backup_path/data/data_backup_$timestamp.zip $deploy_backup_path/data_backup.zip
+rm $deploy_backup_path/$oj_db_backup_file_name
 
-# 將備份文件複製到 /tmp 目錄
-cp $deploy_backup_path/db/db_backup_$timestamp.sql /tmp/db_backup.sql
-cp $deploy_backup_path/data/data_backup_$timestamp.zip /tmp/data_backup.zip
+# 將壓縮檔案複製到 /tmp 目錄
+cp $deploy_backup_path/$oj_backup_file_name /tmp/oj_backup.tar.gz
+
+echo "備份完成"
