@@ -7,13 +7,24 @@ if [ -z "$1" ]; then
 fi
 
 backup_file=$1
-deploy_path=/home/esa/OnlineJudge/OnlineJudgeDeploy
+deploy_path=~/OnlineJudge/OnlineJudgeDeploy
 
 # 檢查備份檔案是否存在
 if [ ! -f $backup_file ]; then
   echo "備份檔案不存在: $backup_file"
   exit 1
 fi
+
+# 要求使用者確認是否要復原
+read -p "確定要復原備份檔案 $backup_file 嗎？(y/N) "
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo "取消復原"
+  exit 1
+fi
+
+# 切換到 deploy_path 目錄
+cd $deploy_path
 
 # 解壓縮備份檔案
 sudo tar -xzvf $backup_file -C /tmp oj_db_backup.sql
@@ -29,5 +40,8 @@ sudo tar -xzvf $backup_file -C $deploy_path data/backend/public data/backend/tes
 
 # 還原後重啟容器
 docker compose --profile esa restart
+
+# 切換回原來的目錄
+cd -
 
 echo "復原完成"
