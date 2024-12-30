@@ -33,4 +33,4 @@ cp $deploy_backup_path/$oj_backup_file_name /tmp/oj_backup.tar.gz
 # 切換回原來的目錄
 cd -
 
-echo "備份完成"
+echo "OJ 備份腳本執行完畢"

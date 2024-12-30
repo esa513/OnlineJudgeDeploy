@@ -15,31 +15,45 @@
 
 ### 伺服器備份
 
-1. 執行 [backup.sh](backup.sh) 腳本以生成伺服器上的備份。
+* 執行 [backup.sh](backup.sh) 腳本以生成伺服器上的備份。
     ```sh
     ./backup.sh
     ```
 
 ### 伺服器恢復
 
-1. 執行 [restore.sh](restore.sh) 腳本以從備份恢復伺服器。
-    ```sh
-    ./restore.sh <backup_file>
-    ```
+* 執行 [restore.sh](restore.sh) 腳本以從備份恢復至伺服器。
+
+    * 含資料庫
+        ```sh
+        ./restore.sh <backup_file>
+        ```
+
+    * 不含資料庫（只有前端圖片、測資等檔案）
+        ```sh
+        ./restore.sh --no-db <backup_file>
+        ```
 
 ### 本地執行伺服器備份
 
-1. 執行 [pc_backup.bat](pc_backup.bat) 腳本以在伺服器上生成備份並將其從伺服器複製到本地。
+* 執行 [pc_backup.bat](pc_backup.bat) 腳本以在伺服器上生成備份並將其從伺服器複製到本地。
     ```bat
-    pc_backup.bat
+    .\pc_backup.bat
     ```
 
 ### 本地執行伺服器恢復
 
-1. 執行 [pc_restore.bat](pc_restore.bat) 腳本以從本地備份恢復，並傳入備份檔參數。
-    ```bat
-    pc_restore.bat <backup_file>
-    ```
+* 執行 [pc_restore.bat](pc_restore.bat) 腳本以從本地備份恢復，並傳入備份檔參數。
+
+    * 含資料庫
+        ```sh
+        .\pc_restore.bat <backup_file>
+        ```
+
+    * 不含資料庫（只有前端圖片、測資等檔案）
+        ```sh
+        .\pc_restore.bat --no-db <backup_file>
+        ```
 
 ## 測試模式
 
@@ -47,14 +61,19 @@
 
 ### 使用範例
 
-- 在測試伺服器上執行本地備份：
+* 在測試伺服器上執行本地備份：
     ```bat
-    pc_backup.bat -t
+    .\pc_backup.bat -t
     ```
 
-- 在測試伺服器上執行本地恢復：
+* 在測試伺服器上執行本地恢復：
     ```bat
-    pc_restore.bat -t <backup_file>
+    .\pc_restore.bat -t <backup_file>
+    ```
+
+* 在測試伺服器上執行本地恢復（不含資料庫）：
+    ```bat
+    .\pc_restore.bat -t --no-db <backup_file>
     ```
 
 ## 注意事項

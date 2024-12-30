@@ -11,6 +11,12 @@ for %%i in (%*) do (
     )
 )
 
+if "%oj%"=="oj" (
+    set server_name=正式伺服器
+) else (
+    set server_name=測試伺服器
+)
+
 @REM ---------------------------------------- 取得時間戳 ----------------------------------------
 for /f "tokens=1-7 delims=:. " %%a in ('wmic os get localdatetime ^| find "."') do (
     set timestamp=%%a
@@ -35,17 +41,20 @@ set ssh_oj_backup_files_folder=/tmp
 set ssh_oj_backup_script_path=~/OnlineJudge/OnlineJudgeDeploy/backup/backup.sh
 
 @REM ---------------------------------------- 使用 SSH 執行遠端備份腳本 ----------------------------------------
+echo 「%server_name%」執行備份腳本
 ssh -t %oj% "bash %ssh_oj_backup_script_path% %timestamp%"
 
 @REM ---------------------------------------- 使用 SCP 將壓縮檔案從遠端伺服器複製到本地 ----------------------------------------
+echo 複製備份檔案到本地
 scp %oj%:%ssh_oj_backup_files_folder%/%ssh_oj_backup_file_name% "%pc_oj_backup_files_folder%\%pc_oj_backup_file_name%"
 
 @REM ---------------------------------------- 開啟檔案總管並選取備份檔案 ----------------------------------------
 if exist "%pc_oj_backup_files_folder%\%pc_oj_backup_file_name%" (
-    echo 備份成功
+    echo 本地備份腳本執行成功
+    echo 備份檔案路徑：%pc_oj_backup_files_folder%\%pc_oj_backup_file_name%
     explorer.exe /select,"%pc_oj_backup_files_folder%\%pc_oj_backup_file_name%"
 
 ) else (
     echo 備份失敗
-pause
+    pause
 )
